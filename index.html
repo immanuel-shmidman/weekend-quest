@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="he" dir="rtl"><!-- lang/dir are re-applied at boot by src/i18n.ts -->
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Phone-first, but NOT zoom-locked: unlike the fixed-canvas birthday-quest,
+         this app is text-heavy (bingo squares, statement trios) and pinch-zoom is
+         a real accessibility need. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1a1130" />
+
+    <!-- Add-to-home-screen: makes the site launch fullscreen with its own icon,
+         so it behaves like an app for the whole weekend. -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icon-180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Weekend Quest" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <title>Weekend Quest</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <!--
+      The entry gate is plain HTML in the document, not rendered by JS, for the
+      same reason birthday-quest did it (src/gate.ts): mobile keyboards are the
+      flakiest part of a phone web app, and this way the input exists before any
+      module parses.
+
+      It is hidden immediately by gate.ts when this phone is already known — a
+      returning player never sees it again all weekend.
+    -->
+    <div id="gate" class="gate">
+      <h1 id="gate-title">&nbsp;</h1>
+      <p id="gate-sub">&nbsp;</p>
+
+      <!-- Step 1: the event password. v2 checks it against the server (each
+           event has its own), and only then can the log be read — which is why
+           the name step, with its "continue as…" chips, comes second. -->
+      <div id="gate-step-pass" class="gate-step hidden">
+        <input
+          id="gate-pass"
+          type="text"
+          inputmode="text"
+          autocomplete="off"
+          autocapitalize="off"
+          dir="auto"
+        />
+        <button id="gate-pass-btn" class="btn btn-primary"></button>
+      </div>
+
+      <!-- Step 2: who are you. -->
+      <div id="gate-step-name" class="gate-step hidden">
+        <input
+          id="gate-name"
+          type="text"
+          inputmode="text"
+          autocomplete="off"
+          maxlength="20"
+          dir="auto"
+        />
+        <button id="gate-btn" class="btn btn-primary"></button>
+
+        <!-- Populated by gate.ts from `join` events already in the log: lets someone
+             who cleared their browser or switched phones reclaim their identity,
+             score and bingo board with one tap. -->
+        <div id="gate-adopt" class="gate-adopt hidden">
+          <div class="gate-adopt-label" id="gate-adopt-label"></div>
+          <div id="gate-adopt-list" class="gate-adopt-list"></div>
+        </div>
+      </div>
+
+      <div class="gate-err" id="gate-err"></div>
+      <button id="gate-lang" class="link"></button>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

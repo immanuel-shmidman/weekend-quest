@@ -1,0 +1,18 @@
+{
+  "name": "weekend-quest",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A weekend party site for 14 friends — live bingo, two truths and a lie, and a quiz built from the group's WhatsApp history.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "roster": "node tools/chat-analyze.mjs roster",
+    "stats": "node tools/chat-analyze.mjs build"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
+  }
+}

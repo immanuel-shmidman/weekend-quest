@@ -1,0 +1,16 @@
+{
+  "name": "Weekend Quest",
+  "short_name": "Quest",
+  "description": "Live bingo, two truths and a lie, and a quiz built from your WhatsApp group",
+  "start_url": "./index.html#/",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1130",
+  "theme_color": "#1a1130",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

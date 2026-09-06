@@ -1,0 +1,18 @@
+node_modules/
+dist/
+*.local
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+
+# wrangler local state
+.wrangler/
+
+# --- WhatsApp export analysis ---------------------------------------------
+# The raw chat export must NEVER leave this machine. Everything the analyzer
+# reads or writes as an intermediate lives in tools/private/; only the derived
+# src/data/chat-stats.json (counts and names, no message text) is committed.
+tools/private/
+*.zip
+WhatsApp Chat*
+.dev.vars

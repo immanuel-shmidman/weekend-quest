@@ -1,0 +1,30 @@
+# Cloudflare Pages config. `npx wrangler pages deploy` reads this, uploads
+# dist/ + functions/, and attaches the D1 binding and vars automatically --
+# no dashboard configuration needed.
+name = "weekend-quest"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "weekend-quest"
+# Filled in by `npx wrangler d1 create weekend-quest` -- paste the id it prints.
+database_id = "b01142c1-548f-4a9c-855f-0a1c39f5f75a"
+
+[vars]
+# v2: passwords and host codes are per event and live hashed in the `rooms`
+# table, so there is nothing per-party here any more. The one optional knob:
+# set CREATE_CODE and flip REQUIRE_CREATE_CODE in functions/api/rooms.js to
+# put event creation behind a code.
+# CREATE_CODE = "change-me"
+#
+# Where /api/feedback forwards bug reports after the Turnstile check: a
+# Formspree form, which emails each submission. Empty = D1 table only.
+FEEDBACK_ENDPOINT = "https://formspree.io/f/mqpkdoll"
+#
+# TURNSTILE_SECRET is a Pages *secret*, not a var:
+#   npx wrangler pages secret put TURNSTILE_SECRET --project-name weekend-quest
+# and TURNSTILE_SECRET=... in .dev.vars for local dev. If the site ever moves
+# to a custom domain, list it in TURNSTILE_HOSTS (comma separated) as well as
+# in the widget settings on the Cloudflare dashboard.
+# TURNSTILE_HOSTS = "quest.example.com"
