@@ -20,28 +20,22 @@ no runtime dependencies.
 
 ## Why no framework
 
-Three facts about this app point the same way: it is small, it is a favour
-rather than a product, and it has to keep working on bad hotel wifi years from
-now with nobody maintaining it.
+Sufficiency, not principle. The app has one piece of state — the folded event
+log — and every screen is a function of it, re-rendered when the log changes.
+Plain DOM covers that in a few hundred lines (`src/ui/dom.ts`, the `live()`
+wrapper in `src/main.ts`), so no framework was added. v1 was built quickly for
+a single weekend on a stack inherited from an earlier party project, and v2
+extended what worked rather than porting it mid-flight.
 
-- **One state, already managed.** Every screen is a pure function of a single
-  folded event log and re-renders when the log changes. A framework's job is
-  reconciling component state with the DOM; here the fold is the state and
-  screens are `render(root)` functions of about a hundred lines.
-- **Weight.** The whole app is ~39 KB gzipped, QR encoder and bilingual strings
-  included. React + ReactDOM are ~45 KB before a line of app code. Phones open
-  this thirty times a weekend on poor connections.
-- **Longevity.** Zero runtime dependencies means no framework majors to migrate
-  and no audit churn for a project that gets attention twice a year. The only
-  dev dependencies are TypeScript and Vite.
-- **The server and the analyzer are plain JavaScript anyway**, and the analyzer
-  runs unchanged in Node and the browser.
+React would have been an equally reasonable choice. Its cost in bytes is
+irrelevant at this size and it is well maintained; the one thing plain DOM
+makes you do by hand is keep text inputs from losing focus on re-render
+(screens with inputs update only their non-input parts), which a virtual DOM
+handles for you.
 
-The honest cost: screens with text inputs must update only their non-input
-parts, or a re-render steals focus mid-typing — a virtual DOM gives that for
-free. The form-heavy wizard and settings screens carry hand-written state that
-hooks or signals would shorten. If those keep growing, Preact (~4 KB) is the
-one alternative worth considering; a full port buys nothing a guest would notice.
+If you are going to add features and prefer React, porting is a few days, not
+a rewrite: `sync.ts`, `store.ts` and the Functions stay as they are, and each
+screen is already a render function of the world.
 
 ## Adding your own feature
 
